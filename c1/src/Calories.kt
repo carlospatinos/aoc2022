@@ -5,7 +5,7 @@ import java.io.File
 fun main () {
     var maxCalariesArray = Array<Int>(3){ 0 };
     var accumulated = 0;
-    File("./input.txt").forEachLine {
+    File("./c1input.txt").forEachLine {
         if(it.equals("")) {
             if (accumulated > maxCalariesArray[0]) {
                 maxCalariesArray[2] = maxCalariesArray[1]
