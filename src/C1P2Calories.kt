@@ -1,18 +1,27 @@
 import java.io.File
 
-// 72070
+// c1p1 - 72070
+// c1p2 - 211805
 fun main () {
-    var maxCalaries = 0;
+    var maxCalariesArray = Array<Int>(3){ 0 };
     var accumulated = 0;
     File("./c1input.txt").forEachLine {
         if(it.equals("")) {
-            if (accumulated > maxCalaries) {
-                maxCalaries = accumulated;
+            if (accumulated > maxCalariesArray[0]) {
+                maxCalariesArray[2] = maxCalariesArray[1]
+                maxCalariesArray[1] = maxCalariesArray[0];
+                maxCalariesArray[0] = accumulated;
+            } else if (accumulated > maxCalariesArray[1]) {
+                maxCalariesArray[2] = maxCalariesArray[1]
+                maxCalariesArray[1] = accumulated;
+            } else if (accumulated > maxCalariesArray[2]) {
+                maxCalariesArray[2] = accumulated;
             }
             accumulated = 0;
         } else {
             accumulated += it.toInt();
         }
     }
-    println("Max Value is $maxCalaries");
+    val sum = maxCalariesArray.sum()
+    println("Max Value is $sum");
 }
