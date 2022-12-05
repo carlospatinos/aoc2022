@@ -2,14 +2,12 @@ import java.io.File
 import kotlin.math.max
 import kotlin.math.min
 
-// 72070
+// 806
 fun main () {
     var totalFullyOverlapAreas = 0
 //maxA>= minB || minA <= maxB
     fun containsSubgroup(minContains: Int, maxContains:Int, minContained:Int, maxContained:Int): Boolean {
-//        return (minContains <= minContained && maxContains >= maxContained)
 //        return (max(minContained, minContains) <= min(maxContained, maxContains)) // -solution
-        // return ((minContains <= minContained && maxContains >= maxContained) || maxContains >= minContained || minContains >= maxContained)
          return ((minContains <= minContained && maxContains >= maxContained) ||
                 (minContained in minContains..maxContains) ||
                 (maxContained in minContains..maxContains))
@@ -35,7 +33,5 @@ fun main () {
     }
     println("Total number is: $totalFullyOverlapAreas")
 }
-// 715
-// 1000
-// 9??
+
 
