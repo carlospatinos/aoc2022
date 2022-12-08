@@ -2,6 +2,10 @@ import java.io.File
 
 // This solution worked for both challenges just changing marker position
 fun main() {
+
+    val TOTAL_FILESYSTEM_SPACE = 70000000
+    val SPACE_REQUIRED_FOR_UPDATE = 30000000
+
     class Node {
         var totalSize:Int = 0
         var size:Int = 0
@@ -48,8 +52,8 @@ fun main() {
     var currentNode = rootNode
     var dirStructure = mutableListOf<Node>()
     dirStructure.add(rootNode)
-    //c7input
-    File("./tmp.txt").forEachLine {
+    //
+    File("./c7input.txt").forEachLine {
 
         if(it.isEmpty() || it.isBlank()){
             throw Exception("Invalid content")
@@ -71,7 +75,7 @@ fun main() {
                     }
                 }
             } else if(it.startsWith("$ ls")){
-                println("exploring directory ${currentNode.name}")
+//                println("exploring directory ${currentNode.name}")
             }
         } else {
             val fileDescription = it.split(" ")
@@ -94,15 +98,24 @@ fun main() {
 
     }
 
-    println("Total size is ${rootNode.totalSize}")
-    var count = 0
+    println("Total space used is ${rootNode.totalSize}")
+    var freeSpace = TOTAL_FILESYSTEM_SPACE - rootNode.totalSize
+    println("Free space is ${freeSpace}")
+    var spaceNeeded = SPACE_REQUIRED_FOR_UPDATE - freeSpace
+    println("Extra space needed for the update ${spaceNeeded}")
+
+    var listOfDirectoriesToDelete = mutableListOf<Node>()
     for(dir in dirStructure) {
-        if (dir.totalSize <= 100000){
-            count += dir.totalSize
+        if (dir.totalSize >= spaceNeeded){
+            listOfDirectoriesToDelete.add(dir)
             println("Dir ${dir.name} is ${dir.totalSize} in size, so being added")
         }
     }
-    println("count = $count")
+
+    listOfDirectoriesToDelete.sortBy { it.totalSize }
+
+    val winner = listOfDirectoriesToDelete.get(0)
+    println("Dir to delete is ${winner.name} with size ${winner.totalSize}")
 
 }
 
